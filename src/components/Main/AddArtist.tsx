@@ -1,10 +1,12 @@
-import { Drawer, Form, Input } from 'antd'
+import { Drawer, Form, Input, Select, Upload } from 'antd'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { Artist } from '../../types/Artist.ts'
 import { addArtist } from '../../redux/artistThunks.ts'
 import { AddArtistProps } from '../../types/props.ts'
 import { StyledButton } from '../common/StyledButton.tsx'
 import { useNotification } from '../common/useNotification.tsx'
+import TextArea from 'antd/es/input/TextArea'
+import { UploadOutlined } from '@ant-design/icons'
 
 export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
   const dispatch = useAppDispatch()
@@ -30,7 +32,7 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
   return (
     <>
       {contextHolder}
-      <GlobalNotificationStyle/>
+      <GlobalNotificationStyle />
       <Drawer
         title="Добавить персону"
         placement="right"
@@ -42,39 +44,79 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
           name="add_artist_form"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 650 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Form.Item<Artist>
-            name="full_name"
-            label='ФИО'
-            rules={[{ required: true }]}
+            name="first_name"
+            label='Имя'
+            rules={[{ required: true, message: "Поля, объязательные для заполнения" }]}
           >
-            <Input />
+            <Input placeholder='Иван' />
           </Form.Item>
 
           <Form.Item<Artist>
-            name="activity"
-            label={'Род деятельности'}
+            name="last_name"
+            label='Фамилия'
+            rules={[{ required: true, message: "Поля, объязательные для заполнения" }]}
           >
-            <Input />
+            <Input placeholder='Иванов' />
           </Form.Item>
 
           <Form.Item<Artist>
-            name="social_networks"
-            label={'Социальные сети'}
+            name="patronymic"
+            label='Отчество'
           >
-            <Input />
+            <Input placeholder='Иванович' />
+          </Form.Item>
+
+          <Form.Item<Artist>
+            name="date_of_birth"
+            label={'Дата рождения'}
+          >
+            <Input placeholder='ДД.ММ.ГГ' />
+          </Form.Item>
+
+          <Form.Item<Artist>
+            name="status"
+            label={'Статус'}
+          >
+            <Select
+              placeholder="Сотрудник"
+              options={[
+                { value: 'guest', label: 'Гость' },
+                { value: 'applicant', label: 'Соискатель' },
+                { value: 'employee', label: 'Сотрудник' },
+              ]}
+            />
           </Form.Item>
 
           <Form.Item<Artist>
             name="phone_numbers"
             label={'Номер телефона'}
           >
-            <Input/>
+            <Input placeholder='+7 777 777 77 77' />
+          </Form.Item>
+
+          <Form.Item<Artist>
+            name="comment"
+            label={'Дополнительная  информация'}
+          >
+            <TextArea placeholder='Любая дополнительная информация' />
+          </Form.Item>
+
+          <Form.Item<Artist>
+            name="file"
+            label={'Прикрепить файл'}
+          >
+            <Upload accept='.word, .pdf'>
+              <StyledButton type="primary" icon={<UploadOutlined />}>
+                Файл
+              </StyledButton>
+            </Upload>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
