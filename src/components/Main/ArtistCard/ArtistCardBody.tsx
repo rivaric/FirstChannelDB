@@ -9,6 +9,7 @@ const StyledCardBody = styled.div`
 
   .card-body-fields {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     padding-top: 16px;
     width: 100%;

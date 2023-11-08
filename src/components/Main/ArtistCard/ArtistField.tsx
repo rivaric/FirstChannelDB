@@ -5,21 +5,20 @@ import { ArtistFieldProps } from '../../../types/props.ts'
 
 const StyledArtistField = styled.div`
   display: flex;
-  flex-direction: var(--artist-field-direction);
-  justify-content: var(--artist-field-justify);
-  width: var(--artist-field-width);
+  margin-bottom: 10px;
 
   &:not(:last-child) {
     box-shadow: var(--artist-field-box-shadow);
   }
   
   .field-key {
-    padding: var(--artist-field-key-padding);
+    // padding: var(--artist-field-key-padding);
   }
   
   .field-value {
     overflow: hidden;
-    padding: var(--artist-field-value-padding);
+    padding-left: 5px;
+    // padding: var(--artist-field-value-padding);
     text-align: var(--artist-field-text-align);
   }
 `
@@ -36,7 +35,7 @@ export const ArtistField = ({ fieldKey, fieldValue }: ArtistFieldProps) => {
 
   return (
     <StyledArtistField>
-      <P mode='light' className='field-key'>{fieldKey}</P>
+      <P mode='light' className='field-key'>{fieldKey}:</P>
       <P className='field-value'>{newValue}</P>
     </StyledArtistField>
   )
