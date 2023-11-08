@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../hooks/redux.ts'
 import { logout } from '../../redux/AppSlice.ts'
 import { useNavigate } from 'react-router-dom'
 import { StyledButton } from '../common/StyledButton.tsx'
+import { Dropdown, MenuProps } from 'antd'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -18,23 +19,58 @@ const StyledHeaderContent = styled.div`
   justify-content: end;
 `
 
+
+
 export const Header = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const onClick = () => {
+
+  const onClickExit = () => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('token_type')
     dispatch(logout())
     navigate('/auth')
   }
 
+  const onClickHelp = () => {
+    console.log("help");
+  }
+
+  const onClickManual = () => {
+    console.log("manual");
+
+  }
+
+  const items: MenuProps['items'] = [
+    {
+      key: "help",
+      label: (<span onClick={onClickHelp}>
+        Обратная связь
+      </span>)
+    },
+    {
+      key: "manual",
+      label: (<span onClick={onClickManual}>
+        Инструкция
+      </span>)
+    },
+    {
+      key: "exit",
+      label: (<span onClick={onClickExit}>
+        Выход
+      </span>)
+    }
+  ];
+
   return (
     <StyledHeader>
       <StyledHeaderContent>
-        <StyledButton type='primary' onClick={onClick}>
-          Выйти
-        </StyledButton>
-        {/*<ProfileIcon full_name={'nikita'} photo_url=''/>*/}
+        <Dropdown menu={{ items }} placement='bottom'>
+          <StyledButton type='primary'>
+            Меню
+          </StyledButton>
+        </Dropdown>
+
       </StyledHeaderContent>
     </StyledHeader>
   )
