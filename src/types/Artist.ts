@@ -29,6 +29,7 @@ export type User = {
 }
 
 export type HelpFormField = {
+  name?: string,
   email?: string,
   message?: string
 }

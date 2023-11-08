@@ -31,9 +31,16 @@ const StyledHelpForm = styled(Form)`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
     
     .ant-form-item-control-input {
       width: 300px;
+    }
+
+    @media (max-width: 450px) {
+      .ant-form-item-control-input {
+        width: 250px;
+      }
     }
   }
 `
@@ -70,7 +77,7 @@ export const HelpForm = () => {
   return pathname !== '/auth' && (
     <div>
       {contextHolder}
-      <GlobalNotificationStyle/>
+      <GlobalNotificationStyle />
       <StyledHelpButton icon={<QuestionCircleOutlined />} type='primary' onClick={showModal} />
       <Modal
         title="Обращение в поддержку"
@@ -89,16 +96,22 @@ export const HelpForm = () => {
           autoComplete="off"
         >
           <Form.Item<HelpFormField>
+            name="name"
+          >
+            <Input placeholder='Как к вам можно обращаться' />
+          </Form.Item>
+
+          <Form.Item<HelpFormField>
             name="email"
           >
-            <Input placeholder='Электронная почта для связи' />
+            <Input placeholder='Электронная почта для обратной связи' />
           </Form.Item>
 
           <Form.Item<HelpFormField>
             name="message"
             rules={[{ required: true, message: 'Введите сообщение' }]}
           >
-            <Input.TextArea rows={3} placeholder='Введите сообщение' />
+            <Input.TextArea rows={3} placeholder='Напишите, пожалуйста, Ваш вопрос' />
           </Form.Item>
 
           <Form.Item>
