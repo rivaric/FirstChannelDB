@@ -16,7 +16,6 @@ const StyledBreadcrumb = styled(Breadcrumb)`
   }
 `
 
-
 const StyledArtistCard = styled.div`
   padding: 0 8px 12px;
 `
@@ -27,7 +26,6 @@ export type ArtistCardProps = {
 
 export const ArtistCard = ({ artist }: ArtistCardProps) => {
   const fieldsKeys = fieldsMapper(artist)
-  console.log(artist)
 
   const navigate = useNavigate()
   const breadcrumbItems = [
@@ -43,13 +41,13 @@ export const ArtistCard = ({ artist }: ArtistCardProps) => {
 
   return (
     <StyledArtistCard>
-      <ArtistHeader artist={artist}/>
+      <ArtistHeader artist={artist} />
       <StyledBreadcrumb items={breadcrumbItems} />
       <div className='card-container' id={String(artist.id)}>
-        <ArtistCardHeader artist={artist}/>
+        <ArtistCardHeader artist={artist} />
         <ArtistCardBody attitude={artist.attitude} fieldsKeys={fieldsKeys} />
       </div>
-      <Helper artist={artist}/>
+      <Helper artist={artist} />
     </StyledArtistCard>
   )
 }

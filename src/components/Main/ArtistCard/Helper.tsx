@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button } from 'antd'
+import { Button, Dropdown, MenuProps } from 'antd'
 import { savePDF } from '../../../helpers/savePDF.ts'
 import YandexShare from '../../ReactYandexShare.tsx'
 import { Artist } from '../../../types/Artist.ts'
@@ -39,21 +39,36 @@ export const Helper = ({ artist }: { artist: Artist }) => {
     dispatch(makePublic(artist.id))
   }
 
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <span onMouseUp={() => onLog()} onTouchEnd={() => onLog()}>
+          <YandexShare theme={{
+            services: 'vkontakte,telegram,whatsapp,viber'
+          }}
+            content={{
+              url: window.location.href
+            }}
+          />
+        </span>
+      ),
+    },
+  ];
+
   return (
     <StyledHelper>
       <Button onClick={() => { savePDF(artist); onLog() }}>
         Сохранить в PDF
       </Button>
-      <span onMouseUp={() => onLog()} onTouchEnd={() => onLog()}>
-        <YandexShare theme={{
-            services: 'vkontakte,telegram,whatsapp,viber'
-          }}
-          content={{
-            url: window.location.href
-          }}
-        />
-      </span>
-
+      <Button onClick={() => { savePDF(artist); onLog() }}>
+        Распечатать
+      </Button>
+      <Dropdown menu={{ items }} placement='bottom'>
+        <Button>
+          Отправить
+        </Button>
+      </Dropdown>
     </StyledHelper>
   )
 }
