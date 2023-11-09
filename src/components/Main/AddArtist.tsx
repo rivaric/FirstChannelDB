@@ -76,7 +76,7 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
             name="date_of_birth"
             label={'Дата рождения'}
           >
-            <Input placeholder='ДД.ММ.ГГ' />
+            <Input placeholder='ДД.ММ.ГГГГ' />
           </Form.Item>
 
           <Form.Item<Artist>

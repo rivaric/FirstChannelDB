@@ -1,29 +1,11 @@
-import { FloatButton, Form, Input, Modal } from 'antd'
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { Form, Input, Modal } from 'antd'
 import styled from 'styled-components'
-import { useState } from 'react'
 import { HelpFormField } from '../types/Artist.ts'
 import { useAppDispatch } from '../hooks/redux.ts'
 import { sendEmail } from '../redux/otherThunks.ts'
 import { useLocation } from 'react-router-dom'
 import { useNotification } from './common/useNotification.tsx'
 import { StyledButton } from './common/StyledButton.tsx'
-
-const StyledHelpButton = styled(FloatButton)`
-  &, .ant-float-btn-body {
-    width: 60px;
-    height: 60px;
-    background-color: #2557A2;
-    
-    &:hover {
-      background: #306ecc;
-    }
-  } 
-    svg, &&&&& .ant-float-btn-icon {
-      height: 27px;
-      width: 27px;
-    }
-`
 
 const StyledHelpForm = styled(Form)`
   padding-top: 48px;
@@ -34,10 +16,10 @@ const StyledHelpForm = styled(Form)`
     flex-wrap: wrap;
     
     .ant-form-item-control-input {
-      width: 300px;
+      width: 400px;
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 500px) {
       .ant-form-item-control-input {
         width: 250px;
       }
@@ -45,11 +27,15 @@ const StyledHelpForm = styled(Form)`
   }
 `
 
-export const HelpForm = () => {
+interface HelpFormProps {
+  isOpen: boolean,
+  setIsOpen : (isOpen: boolean) => void 
+}
+
+export const HelpForm = ({isOpen, setIsOpen} : HelpFormProps) => {
   const { pathname } = useLocation()
 
   const dispatch = useAppDispatch()
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     contextHolder,
@@ -60,13 +46,9 @@ export const HelpForm = () => {
     'Ответ от поддержки придет в ближайшее время'
   )
 
-  const showModal = () => {
-    setIsModalOpen(true)
-  }
-
   const onFinish = (email: HelpFormField) => {
     dispatch(sendEmail(email))
-    setIsModalOpen(false)
+    setIsOpen(false)
     openNotification()
   }
 
@@ -75,14 +57,13 @@ export const HelpForm = () => {
   }
 
   return pathname !== '/auth' && (
-    <div>
+    <div >
       {contextHolder}
       <GlobalNotificationStyle />
-      <StyledHelpButton icon={<QuestionCircleOutlined />} type='primary' onClick={showModal} />
       <Modal
         title="Обращение в поддержку"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        open={isOpen}
+        onCancel={() => setIsOpen(false)}
         footer={<></>}
       >
         <StyledHelpForm
@@ -111,7 +92,7 @@ export const HelpForm = () => {
             name="message"
             rules={[{ required: true, message: 'Введите сообщение' }]}
           >
-            <Input.TextArea rows={3} placeholder='Напишите, пожалуйста, Ваш вопрос' />
+            <Input.TextArea rows={7} placeholder='Напишите, пожалуйста, Ваш вопрос' />
           </Form.Item>
 
           <Form.Item>

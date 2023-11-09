@@ -8,6 +8,7 @@ import { AdminPanelDataLayers } from './components/AdminPanel/AdminPanelDataLaye
 import { HelpForm } from './components/HelpForm.tsx'
 import { GlobalStyles } from './css/globalStyled.ts'
 import { ArtistCardCheckPublic } from './components/Main/ArtistCard/ArtistCardCheckPublic.tsx'
+import { useState } from 'react'
 
 const StyledLayout = styled(Layout)`
   background-color: #fff;
@@ -19,12 +20,13 @@ const StyledMainContainer = styled.main`
 `
 
 export const App = () => {
+  const [isOpenHelpModal, setIsOpenHelpModal] = useState(false);
 
   return (
     <>
       <GlobalStyles />
       <StyledLayout>
-        <Header/>
+        <Header setIsOpenHelpModal={setIsOpenHelpModal}/>
         <StyledMainContainer>
           <Routes>
             <Route path='/admin_panel' element={<AdminPanelDataLayers/>} />
@@ -32,7 +34,7 @@ export const App = () => {
             <Route path='/' element={<MainDataLayer/>} />
             <Route path='/:artist_id' element={<ArtistCardCheckPublic />} />
           </Routes>
-          <HelpForm/>
+          <HelpForm isOpen={isOpenHelpModal} setIsOpen={setIsOpenHelpModal}/>
         </StyledMainContainer>
       </StyledLayout>
     </>

@@ -19,9 +19,11 @@ const StyledHeaderContent = styled.div`
   justify-content: end;
 `
 
+interface HeaderProps {
+  setIsOpenHelpModal: (isOpen : boolean) => void
+}
 
-
-export const Header = () => {
+export const Header = ({setIsOpenHelpModal} : HeaderProps) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -34,11 +36,11 @@ export const Header = () => {
 
   const onClickHelp = () => {
     console.log("help");
+    setIsOpenHelpModal(true);
   }
 
   const onClickManual = () => {
     console.log("manual");
-
   }
 
   const items: MenuProps['items'] = [
@@ -66,11 +68,10 @@ export const Header = () => {
     <StyledHeader>
       <StyledHeaderContent>
         <Dropdown menu={{ items }} placement='bottom'>
-          <StyledButton type='primary'>
+          <StyledButton type='primary' style={{minWidth: "130px"}}>
             Меню
           </StyledButton>
         </Dropdown>
-
       </StyledHeaderContent>
     </StyledHeader>
   )
