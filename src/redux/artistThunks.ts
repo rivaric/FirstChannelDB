@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Artist } from "../types/Artist.ts";
+import { Artist, ArtistList } from "../types/Artist.ts";
 import { getConfig } from "./AppSlice.ts";
 
 export const allArtists = createAsyncThunk(
@@ -46,6 +46,24 @@ export const addArtist = createAsyncThunk(
         getConfig()
       );
       return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue("Не удалось добавить персону");
+    }
+  }
+);
+
+export const addArtistList = createAsyncThunk(
+  "add_artist_list",
+  async (value: ArtistList, thunkAPI) => {
+    try {
+      console.log(value);
+      
+      // const response = await axios.post<Artist>(
+      //   "add_artist",
+      //   value,
+      //   getConfig()
+      // );
+      // return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Не удалось добавить персону");
     }

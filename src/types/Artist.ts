@@ -11,7 +11,7 @@ export type Artist = {
   full_name: string; // -
   activity?: string; // -
   psy_character?: string | null; // +
-  status?: "guest" | "applicant" | "employee"; // +
+  status?: "Гость" | "Соискатель" | "Сотрудник"; // +
   social_networks?: string; // +
   email?: null | string; // +
   mentions_count?: number; // +
@@ -28,8 +28,12 @@ export type Artist = {
   publications?: null | string; // +
   negative_info?: null | string; // +
   comment?: string;
-  file?: File;
 };
+
+export type ArtistList = {
+  comment?: string,
+  files?: File[];
+}
 
 export type User = {
   login: string;

@@ -1,4 +1,4 @@
-import { Drawer, Form, Input, Select, Upload } from 'antd'
+import { Drawer, Form, Input, Select } from 'antd'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { Artist } from '../../types/Artist.ts'
 import { addArtist } from '../../redux/artistThunks.ts'
@@ -6,7 +6,6 @@ import { AddArtistProps } from '../../types/props.ts'
 import { StyledButton } from '../common/StyledButton.tsx'
 import { useNotification } from '../common/useNotification.tsx'
 import TextArea from 'antd/es/input/TextArea'
-import { UploadOutlined } from '@ant-design/icons'
 
 export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
   const dispatch = useAppDispatch()
@@ -87,9 +86,9 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
             <Select
               placeholder="Сотрудник"
               options={[
-                { value: 'guest', label: 'Гость' },
-                { value: 'applicant', label: 'Соискатель' },
-                { value: 'employee', label: 'Сотрудник' },
+                { value: 'Гость', label: 'Гость' },
+                { value: 'Соискатель', label: 'Соискатель' },
+                { value: 'Сотрудник', label: 'Сотрудник' },
               ]}
             />
           </Form.Item>
@@ -105,18 +104,7 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
             name="comment"
             label={'Дополнительная  информация'}
           >
-            <TextArea placeholder='Любая дополнительная информация' />
-          </Form.Item>
-
-          <Form.Item<Artist>
-            name="file"
-            label={'Прикрепить файл'}
-          >
-            <Upload accept='.word, .pdf'>
-              <StyledButton type="primary" icon={<UploadOutlined />}>
-                Файл
-              </StyledButton>
-            </Upload>
+            <TextArea placeholder='Любая дополнительная информация' autoSize={{ minRows: 6 }}/>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

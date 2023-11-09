@@ -3,6 +3,9 @@ import { PlusOutlined } from '@ant-design/icons'
 import { AddArtist } from '../AddArtist.tsx'
 import { StyledButton } from '../../common/StyledButton.tsx'
 import styled from 'styled-components'
+import { MenuProps } from 'antd'
+import { Dropdown } from 'antd/lib/index'
+import { AddArtistList } from '../AddArtistList.tsx'
 
 const StyledSettingsButton = styled(StyledButton)`
   padding: var(--add-button-padding);
@@ -18,16 +21,35 @@ const StyledSettingsButton = styled(StyledButton)`
 `
 
 export const SettingsButton = () => {
-  const [open, setOpen] = useState(false)
+  const [openAddArtist, setOpenAddArtist] = useState(false)
+  const [openAddList, setOpenAddList] = useState(false)
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <div onClick={() => setOpenAddArtist(true)}>Добавить персону</div>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <div onClick={() => setOpenAddList(true)}>Отправить список</div>
+      ),
+    },
+  ];
 
   return <>
-    <StyledSettingsButton
-      type="primary"
-      onClick={() => setOpen(true)}
-      icon={<PlusOutlined/>}
-    >
-      Добавить
-    </StyledSettingsButton>
-    <AddArtist open={open} setOpen={setOpen}/>
+    <Dropdown menu={{ items }} placement='bottom'>
+      <StyledSettingsButton
+        type="primary"
+
+        icon={<PlusOutlined />}
+      >
+        Новый запрос
+      </StyledSettingsButton>
+    </Dropdown>
+    <AddArtist open={openAddArtist} setOpen={setOpenAddArtist} />
+    <AddArtistList open={openAddList} setOpen={setOpenAddList} />
   </>
 }

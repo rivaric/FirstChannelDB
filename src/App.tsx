@@ -36,6 +36,5 @@ export const App = () => {
         </StyledMainContainer>
       </StyledLayout>
     </>
-
   )
 }
