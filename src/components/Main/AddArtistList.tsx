@@ -34,7 +34,7 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
             {contextHolder}
             <GlobalNotificationStyle />
             <Drawer
-                title="Отправить список"
+                title="Предложить список"
                 placement="right"
                 onClose={() => setOpen(false)}
                 open={open}

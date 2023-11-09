@@ -28,13 +28,13 @@ export const SettingsButton = () => {
     {
       key: '1',
       label: (
-        <div onClick={() => setOpenAddArtist(true)}>Добавить персону</div>
+        <div onClick={() => setOpenAddArtist(true)}>Предложить персону</div>
       ),
     },
     {
       key: '2',
       label: (
-        <div onClick={() => setOpenAddList(true)}>Отправить список</div>
+        <div onClick={() => setOpenAddList(true)}>Предложить список</div>
       ),
     },
   ];

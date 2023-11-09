@@ -53,19 +53,19 @@ export const addArtist = createAsyncThunk(
 );
 
 export const addArtistList = createAsyncThunk(
-  "add_artist_list",
+  "send_list",
   async (value: ArtistList, thunkAPI) => {
     try {
       console.log(value);
       
-      // const response = await axios.post<Artist>(
-      //   "add_artist",
-      //   value,
-      //   getConfig()
-      // );
-      // return response.data;
+      const response = await axios.post<ArtistList>(
+        "send_list",
+        value,
+        getConfig()
+      );
+      return response.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue("Не удалось добавить персону");
+      return thunkAPI.rejectWithValue("Не удалось отправить список персон");
     }
   }
 );

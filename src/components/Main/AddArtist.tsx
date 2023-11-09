@@ -33,7 +33,7 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
       {contextHolder}
       <GlobalNotificationStyle />
       <Drawer
-        title="Добавить персону"
+        title="Предложить персону"
         placement="right"
         onClose={() => setOpen(false)}
         open={open}
