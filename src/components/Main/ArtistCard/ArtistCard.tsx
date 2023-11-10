@@ -7,12 +7,17 @@ import { Helper } from './Helper.tsx'
 import { ArtistHeader } from './ArtistHeader.tsx'
 import { ArtistCardHeader } from './ArtistCardHeader.tsx'
 import { ArtistCardBody } from './ArtistCardBody.tsx'
+import { useRef } from 'react'
 
 const StyledBreadcrumb = styled(Breadcrumb)`
   display: var(--artist-card-breadcrumb-display);
   
   .breadcrumb-main {
     cursor: pointer;
+  }
+
+  @media print {
+    padding: 100px;
   }
 `
 
@@ -26,6 +31,7 @@ export type ArtistCardProps = {
 
 export const ArtistCard = ({ artist }: ArtistCardProps) => {
   const fieldsKeys = fieldsMapper(artist)
+  const printRef = useRef<HTMLDivElement>(null)
 
   const navigate = useNavigate()
   const breadcrumbItems = [
@@ -43,11 +49,13 @@ export const ArtistCard = ({ artist }: ArtistCardProps) => {
     <StyledArtistCard>
       <ArtistHeader artist={artist} />
       <StyledBreadcrumb items={breadcrumbItems} />
-      <div className='card-container' id={String(artist.id)}>
-        <ArtistCardHeader artist={artist} />
-        <ArtistCardBody attitude={artist.attitude} fieldsKeys={fieldsKeys} />
+      <div ref={printRef}>
+        <div className='card-container' id={String(artist.id)}>
+          <ArtistCardHeader artist={artist} />
+          <ArtistCardBody attitude={artist.attitude} fieldsKeys={fieldsKeys} />
+        </div>
       </div>
-      <Helper artist={artist} />
+      <Helper artist={artist} contentPrint={printRef} />
     </StyledArtistCard>
   )
 }

@@ -4,9 +4,8 @@ import { P } from '../../common/P.tsx'
 
 const StyledAvatar = styled.div.withConfig({
   shouldForwardProp: prop => !['photo_url'].includes(prop)
-})<{ photo_url?: string }>`
+}) <{ photo_url?: string }>`
   .artist-content-avatar {
-    background: url(${({photo_url}) => photo_url}) 50% 50% no-repeat;
     background-size: cover;
     height: var(--artist-card-avatar-width);
     width: var(--artist-card-avatar-width);
@@ -34,7 +33,7 @@ export const ArtistCardHeader = ({ artist }: { artist: Artist }) => {
   return (
     <StyledCardHeader>
       <StyledAvatar photo_url={artist.photo_url}>
-        <div className='artist-content-avatar'/>
+        <img src={artist.photo_url} className='artist-content-avatar' />
       </StyledAvatar>
       <div className="card-header-info">
         <P fontWeight={500} fontSize={24}>

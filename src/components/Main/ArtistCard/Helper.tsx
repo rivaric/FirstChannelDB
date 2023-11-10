@@ -6,6 +6,8 @@ import { Artist } from '../../../types/Artist.ts'
 import { useAppDispatch } from '../../../hooks/redux.ts'
 import { logDownload } from '../../../redux/otherThunks.ts'
 import { makePublic } from '../../../redux/artistThunks.ts'
+import ReactToPrint, { useReactToPrint } from 'react-to-print'
+import { RefObject } from 'react'
 
 const StyledHelper = styled.div`
   display: flex;
@@ -14,6 +16,7 @@ const StyledHelper = styled.div`
   align-items: center;
   margin-top: 16px;
   padding: 8px 0;
+  flex-wrap: wrap;
   
   &&&& .ya-share2__list {
     display: flex;
@@ -31,8 +34,12 @@ const StyledHelper = styled.div`
   }
 `
 
-export const Helper = ({ artist }: { artist: Artist }) => {
+export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint: RefObject<HTMLDivElement> }) => {
   const dispatch = useAppDispatch()
+  const handlerPrint = useReactToPrint({
+    content: () => contentPrint.current,
+    pageStyle : ``
+  })
 
   const onLog = () => {
     dispatch(logDownload(artist.id))
@@ -61,9 +68,7 @@ export const Helper = ({ artist }: { artist: Artist }) => {
       <Button onClick={() => { savePDF(artist); onLog() }}>
         Сохранить в PDF
       </Button>
-      <Button onClick={() => { savePDF(artist); onLog() }}>
-        Распечатать
-      </Button>
+      <Button onClick={handlerPrint}>Распечатать</Button>
       <Dropdown menu={{ items }} placement='bottom'>
         <Button>
           Отправить
@@ -72,3 +77,4 @@ export const Helper = ({ artist }: { artist: Artist }) => {
     </StyledHelper>
   )
 }
+
