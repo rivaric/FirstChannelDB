@@ -1,99 +1,128 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Artist, User } from '../types/Artist.ts'
-import { AuthResponseSuccess } from '../types/auth.ts'
-import { defaultPending, defaultRejected } from './defaultReducersFuncs.ts'
-import { addArtist, allArtists, checkPublic, getArtist } from './artistThunks.ts'
-import { addUser, deleteUser, getUsers } from './userThunks.ts'
-import { authUser, sendEmail } from './otherThunks.ts'
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Artist, AuthData, User } from "../types/Artist.ts";
+import { AuthResponseSuccess } from "../types/auth.ts";
+import { defaultPending, defaultRejected } from "./defaultReducersFuncs.ts";
+import {
+  addArtist,
+  allArtists,
+  checkPublic,
+  getArtist,
+} from "./artistThunks.ts";
+import { addUser, deleteUser, getUsers } from "./userThunks.ts";
+import { authUser, getAuthData, linkEmail, sendEmail } from "./otherThunks.ts";
+import { useAppDispatch } from "../hooks/redux.ts";
 
 export const getConfig = () => ({
-  baseURL: 'http://37.46.129.49:8080/',
+  baseURL: "http://37.46.129.49:8080/",
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-  }
-})
+    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+  },
+});
 
 export type AppSliceState = {
-  artists: Artist[],
-  users: User[]
-  isLoading: boolean,
-  isInitialized: boolean,
-  error: string,
-  currentArtist: Artist,
-  isCurrentArtistPublic: boolean,
+  artists: Artist[];
+  users: User[];
+  isLoading: boolean;
+  isInitialized: boolean;
+  error: string;
+  currentArtist: Artist;
+  isCurrentArtistPublic: boolean;
   auth: {
-    isAuth: boolean,
-    isAdmin: boolean
-  }
-}
+    isAuth: boolean;
+    isAdmin: boolean;
+    has_email: boolean;
+  };
+};
 
 const initialState: AppSliceState = {
   artists: [],
   users: [],
   isLoading: false,
   isInitialized: false,
-  error: 'error',
+  error: "error",
   currentArtist: {},
   isCurrentArtistPublic: false,
   auth: {
     isAuth: false,
-    isAdmin: true
-  }
-}
+    isAdmin: true,
+    has_email: true,
+  },
+};
 
 export const AppSlice = createSlice({
-  name: 'App',
+  name: "App",
   initialState,
   reducers: {
     checkAuth: (state) => {
-      if (localStorage.getItem('access_token')) {
-        state.auth.isAuth = true
+      if (localStorage.getItem("access_token")) {
+        state.auth.isAuth = true;
       }
     },
     logout: (state) => {
-      state.auth.isAuth = false
-    }
+      state.auth.isAuth = false;
+    },
+    
   },
   extraReducers: {
     // artists
     [allArtists.fulfilled.type]: (state, action: PayloadAction<Artist[]>) => {
-      state.isLoading = false
-      state.artists = action.payload
+      state.isLoading = false;
+      state.artists = action.payload;
     },
     [getArtist.fulfilled.type]: (state, action: PayloadAction<Artist>) => {
-      state.isLoading = false
-      state.currentArtist = action.payload
+      state.isLoading = false;
+      state.currentArtist = action.payload;
     },
     [addArtist.fulfilled.type]: (state, action: PayloadAction<Artist[]>) => {
-      state.isLoading = false
-      state.artists = action.payload
+      state.isLoading = false;
+      state.artists = action.payload;
     },
     [checkPublic.fulfilled.type]: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = false
-      state.isCurrentArtistPublic = action.payload
-      state.isInitialized = true
+      state.isLoading = false;
+      state.isCurrentArtistPublic = action.payload;
+      state.isInitialized = true;
     },
     // users
     [getUsers.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
-      state.users = action.payload
+      state.users = action.payload;
     },
     [addUser.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
-      state.isLoading = false
-      state.users = action.payload
+      state.isLoading = false;
+      state.users = action.payload;
     },
     [deleteUser.fulfilled.type]: (state, action: PayloadAction<User[]>) => {
-      state.users = action.payload
+      state.users = action.payload;
     },
     // other
     [sendEmail.fulfilled.type]: defaultRejected,
-    [authUser.fulfilled.type]: (state, action: PayloadAction<AuthResponseSuccess>) => {
-      const payload = action.payload
-      console.log(action.payload)
-      localStorage.setItem('access_token', payload.access_token)
-      localStorage.setItem('token_type', payload.token_type)
-      state.isLoading = false
-      state.auth.isAuth = true
-      state.auth.isAdmin = payload.is_admin
+    [authUser.fulfilled.type]: (
+      state,
+      action: PayloadAction<AuthResponseSuccess>
+    ) => {
+      const payload = action.payload;
+      console.log(action.payload);
+      localStorage.setItem("access_token", payload.access_token);
+      localStorage.setItem("token_type", payload.token_type);
+      localStorage.setItem("has_email", String(payload.has_email))
+      state.isLoading = false;
+      state.auth.isAuth = true;
+      state.auth.isAdmin = payload.is_admin;
+      state.auth.has_email = payload.has_email;
+    },
+    // AuthData
+    [getAuthData.rejected.type]: defaultRejected,
+    [getAuthData.pending.type]: defaultPending,
+    [getAuthData.fulfilled.type] : (state, action: PayloadAction<AuthData>) => {
+      const payload = action.payload;
+      state.auth.has_email = payload.has_email;
+      state.auth.isAdmin = payload.is_admin;
+    },
+
+    // Add email
+    [linkEmail.rejected.type]: defaultRejected,
+    [linkEmail.pending.type]: defaultPending,
+    [linkEmail.fulfilled.type]: (state) => {
+      state.auth.has_email = true;
     },
     // artists
     [allArtists.pending.type]: defaultPending,
@@ -116,9 +145,9 @@ export const AppSlice = createSlice({
     [authUser.pending.type]: defaultPending,
     [sendEmail.rejected.type]: defaultRejected,
     [authUser.rejected.type]: defaultRejected,
-  }
-})
+  },
+});
 
-export const { checkAuth, logout } = AppSlice.actions
+export const { checkAuth, logout } = AppSlice.actions;
 
-export default AppSlice.reducer
+export default AppSlice.reducer;

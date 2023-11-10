@@ -44,3 +44,12 @@ export type HelpFormField = {
   email?: string;
   message?: string;
 };
+
+export type AddEmailFormField = {
+  email?: string,
+}
+
+export type AuthData = {
+  has_email: boolean,
+  is_admin: boolean,
+}

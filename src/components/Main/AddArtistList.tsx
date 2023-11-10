@@ -61,7 +61,7 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
                         name="files"
                         label={'Прикрепить файл'}
                     >
-                        <Upload accept='.docx, .doc, .pdf, .txt, .odt'>
+                        <Upload accept='.docx, .doc, .pdf, .txt, .odt' multiple>
                             <StyledButton icon={<UploadOutlined />} style={{backgroundColor: "rgb(244, 245, 246)", color: "rgb(70, 75, 83)"}}>
                                 Файл
                             </StyledButton>

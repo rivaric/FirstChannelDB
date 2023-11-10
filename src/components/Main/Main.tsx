@@ -3,6 +3,7 @@ import { Pagination } from '../Pagination/Pagination.tsx'
 import { useEffect, useState } from 'react'
 import { MainProps } from '../../types/props.ts'
 import { ArtistRow } from './ArtistRow.tsx'
+import { AddEmailForm } from '../AddEmailForm.tsx'
 
 export const Main = ({ artistsRedux }: MainProps) => {
   const [artists, setArtists] = useState(artistsRedux)
@@ -13,11 +14,12 @@ export const Main = ({ artistsRedux }: MainProps) => {
 
   return (
     <main>
-      <Settings artists={artistsRedux} setArtists={setArtists}/>
-      <div className='main-list-container'>
+      <AddEmailForm />
+      <Settings artists={artistsRedux} setArtists={setArtists} />
+      <div className='main-list-container' >
         {
           artists.map(artist => (
-            <ArtistRow artist={artist} key={artist.id}/>
+            <ArtistRow artist={artist} key={artist.id} />
           ))
         }
       </div>

@@ -1,31 +1,11 @@
 import { Form, Input, Modal } from 'antd'
-import styled from 'styled-components'
 import { HelpFormField } from '../types/Artist.ts'
 import { useAppDispatch } from '../hooks/redux.ts'
 import { sendEmail } from '../redux/otherThunks.ts'
 import { useLocation } from 'react-router-dom'
 import { useNotification } from './common/useNotification.tsx'
 import { StyledButton } from './common/StyledButton.tsx'
-
-const StyledHelpForm = styled(Form)`
-  padding-top: 48px;
-  .ant-form-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    
-    .ant-form-item-control-input {
-      width: 400px;
-    }
-
-    @media (max-width: 500px) {
-      .ant-form-item-control-input {
-        width: 250px;
-      }
-    }
-  }
-`
+import { StyledForm } from './AddEmailForm.tsx'
 
 interface HelpFormProps {
   isOpen: boolean,
@@ -46,8 +26,8 @@ export const HelpForm = ({isOpen, setIsOpen} : HelpFormProps) => {
     'Ответ от поддержки придет в ближайшее время'
   )
 
-  const onFinish = (email: HelpFormField) => {
-    dispatch(sendEmail(email))
+  const onFinish = (value: HelpFormField) => {
+    dispatch(sendEmail(value))
     setIsOpen(false)
     openNotification()
   }
@@ -66,7 +46,7 @@ export const HelpForm = ({isOpen, setIsOpen} : HelpFormProps) => {
         onCancel={() => setIsOpen(false)}
         footer={<></>}
       >
-        <StyledHelpForm
+        <StyledForm
           name="help_form"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
@@ -100,7 +80,7 @@ export const HelpForm = ({isOpen, setIsOpen} : HelpFormProps) => {
               Отправить
             </StyledButton>
           </Form.Item>
-        </StyledHelpForm>
+        </StyledForm>
       </Modal>
     </div>
   )
