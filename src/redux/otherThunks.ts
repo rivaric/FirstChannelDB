@@ -50,7 +50,6 @@ export const getAuthData = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get<AuthData>("user_auth_info", getConfig());
-      console.log(response.data);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Не удалось загрузить дополнительные данные");

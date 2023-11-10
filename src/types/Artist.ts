@@ -32,7 +32,7 @@ export type Artist = {
 
 export type ArtistList = {
   comment?: string,
-  files?: File[];
+  files?: any;
 }
 
 export type User = {

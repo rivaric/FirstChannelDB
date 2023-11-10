@@ -19,10 +19,36 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
         'Карточки будут актуализированы в ближайшее время'
     )
 
-    const onFinish = (artistList: ArtistList) => {
-        dispatch(addArtistList(artistList))
+    const onFinish = ({ comment, files }: ArtistList) => {
+        const dataFiles: any = [];
+
+        files?.fileList.forEach((file: any) => {
+            getBase64(file.originFileObj)
+                .then((b64) => {
+                    dataFiles.push([file.name, b64])
+                });
+
+        });
+
+        const postData = {
+            comment: comment,
+            files: dataFiles
+        }
+
+        dispatch(addArtistList(postData))
         setOpen(false)
         openNotification()
+    }
+
+    async function getBase64(file: File) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = () => {
+                resolve(reader.result)
+            }
+            reader.onerror = reject
+        })
     }
 
     const onFinishFailed = () => {
@@ -62,7 +88,7 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
                         label={'Прикрепить файл'}
                     >
                         <Upload accept='.docx, .doc, .pdf, .txt, .odt' multiple>
-                            <StyledButton icon={<UploadOutlined />} style={{backgroundColor: "rgb(244, 245, 246)", color: "rgb(70, 75, 83)"}}>
+                            <StyledButton icon={<UploadOutlined />} style={{ backgroundColor: "rgb(244, 245, 246)", color: "rgb(70, 75, 83)" }}>
                                 Файл
                             </StyledButton>
                         </Upload>
