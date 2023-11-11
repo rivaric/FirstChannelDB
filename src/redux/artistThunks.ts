@@ -56,8 +56,6 @@ export const addArtistList = createAsyncThunk(
   "send_list",
   async (value: ArtistList, thunkAPI) => {
     try {
-      console.log(value);
-      
       const response = await axios.post<ArtistList>(
         "send_list",
         value,

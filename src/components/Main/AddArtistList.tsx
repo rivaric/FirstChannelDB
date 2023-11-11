@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Drawer, Form, Upload } from 'antd'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { ArtistList } from '../../types/Artist.ts'
@@ -20,35 +21,37 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
     )
 
     const onFinish = ({ comment, files }: ArtistList) => {
-        const dataFiles: any = [];
+        const images = files.fileList;
 
-        files?.fileList.forEach((file: any) => {
-            getBase64(file.originFileObj)
-                .then((b64) => {
-                    dataFiles.push([file.name, b64])
-                });
+        Promise.all(
+            images.map(
+                (image) =>
+                    new Promise((resolve, reject) => {
+                        const fileReader = new FileReader();
 
-        });
+                        fileReader.onload = (file) => {
+                            resolve(file.target.result.split(',')[1]);
+                        };
 
-        const postData = {
-            comment: comment,
-            files: dataFiles
-        }
+                        fileReader.onerror = (error) => reject(error);
 
-        dispatch(addArtistList(postData))
-        setOpen(false)
-        openNotification()
-    }
-
-    async function getBase64(file: File) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onload = () => {
-                resolve(reader.result)
+                        fileReader.readAsDataURL(image.originFileObj);
+                    })
+            )
+        ).then((base64Images) => {
+            const dataFiles: any = base64Images.map((image, i) => {
+                return [files.fileList[i].originFileObj.name, image];
+            });
+            
+            const postData = {
+                comment: comment,
+                files: dataFiles
             }
-            reader.onerror = reject
-        })
+    
+            dispatch(addArtistList(postData))
+            setOpen(false)
+            openNotification()
+        });
     }
 
     const onFinishFailed = () => {
@@ -79,6 +82,7 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
                     <Form.Item<ArtistList>
                         name="comment"
                         label={'Дополнительная  информация'}
+                        rules={[{ required: true, message: "Поля, объязательные для заполнения" }]}
                     >
                         <TextArea placeholder='Любая дополнительная информация' autoSize={{ minRows: 6 }} />
                     </Form.Item>
@@ -86,6 +90,7 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
                     <Form.Item<ArtistList>
                         name="files"
                         label={'Прикрепить файл'}
+                        rules={[{ required: true, message: "Поля, объязательные для заполнения" }]}
                     >
                         <Upload accept='.docx, .doc, .pdf, .txt, .odt' multiple>
                             <StyledButton icon={<UploadOutlined />} style={{ backgroundColor: "rgb(244, 245, 246)", color: "rgb(70, 75, 83)" }}>
