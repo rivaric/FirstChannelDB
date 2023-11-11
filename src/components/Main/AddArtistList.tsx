@@ -42,12 +42,12 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
             const dataFiles: any = base64Images.map((image, i) => {
                 return [files.fileList[i].originFileObj.name, image];
             });
-            
+
             const postData = {
-                comment: comment,
+                comment: comment || " ",
                 files: dataFiles
             }
-    
+
             dispatch(addArtistList(postData))
             setOpen(false)
             openNotification()
@@ -63,7 +63,7 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
             {contextHolder}
             <GlobalNotificationStyle />
             <Drawer
-                title="Предложить список"
+                title="Отправить список"
                 placement="right"
                 onClose={() => setOpen(false)}
                 open={open}
@@ -82,7 +82,6 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
                     <Form.Item<ArtistList>
                         name="comment"
                         label={'Дополнительная  информация'}
-                        rules={[{ required: true, message: "Поля, объязательные для заполнения" }]}
                     >
                         <TextArea placeholder='Любая дополнительная информация' autoSize={{ minRows: 6 }} />
                     </Form.Item>
@@ -92,12 +91,21 @@ export const AddArtistList = ({ open, setOpen }: AddArtistProps) => {
                         label={'Прикрепить файл'}
                         rules={[{ required: true, message: "Поля, объязательные для заполнения" }]}
                     >
-                        <Upload accept='.docx, .doc, .pdf, .txt, .odt' multiple>
+                        <Upload accept='.docx, .doc, .pdf, .txt, .odt' multiple maxCount="3">
                             <StyledButton icon={<UploadOutlined />} style={{ backgroundColor: "rgb(244, 245, 246)", color: "rgb(70, 75, 83)" }}>
                                 Файл
                             </StyledButton>
                         </Upload>
                     </Form.Item>
+
+                    <div style={{
+                        fontSize: "12",
+                        color: "red",
+                        textAlign: "center",
+                        marginBottom: "20px",
+                    }} >
+                        * - поле объязательно к заполнению
+                    </div>
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <StyledButton type="primary" htmlType="submit">

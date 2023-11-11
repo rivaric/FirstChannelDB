@@ -104,8 +104,17 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
             name="comment"
             label={'Дополнительная  информация'}
           >
-            <TextArea placeholder='Любая дополнительная информация' autoSize={{ minRows: 6 }}/>
+            <TextArea placeholder='Любая дополнительная информация' autoSize={{ minRows: 6 }} />
           </Form.Item>
+
+          <div style={{
+            fontSize: "12",
+            color: "red",
+            textAlign: "center",
+            marginBottom: "20px",
+          }} >
+            * - поле объязательно к заполнению
+          </div>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <StyledButton type="primary" htmlType="submit">

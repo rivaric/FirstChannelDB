@@ -34,7 +34,7 @@ export const SettingsButton = () => {
     {
       key: '2',
       label: (
-        <div onClick={() => setOpenAddList(true)}>Предложить список</div>
+        <div onClick={() => setOpenAddList(true)}>Отправить список</div>
       ),
     },
   ];

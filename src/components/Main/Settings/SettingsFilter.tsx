@@ -50,38 +50,40 @@ export const SettingsFilter = ({ artists, setArtists }: SettingsInputsProps) => 
       if (employee) {
         allowedStatus.push('Сотрудник')
       }
-      const newArtists = artists.filter(artist => allowedStatus.includes(artist.status) )
+      const newArtists = artists.filter(artist => allowedStatus.includes(artist.status))
       setArtists(newArtists)
     }
 
   }, [guest, employee, candidate, setArtists, artists])
 
   const items: MenuProps['items'] = [
-    { key: 'guest', label: (
+    {
+      key: 'guest', label: (
         <Checkbox onChange={(e) => setGuest(e.target.checked)}>Гость</Checkbox>
-    )},
-    { key: 'candidate', label: (
+      )
+    },
+    {
+      key: 'candidate', label: (
         <Checkbox onChange={(e) => setCandidate(e.target.checked)}>Соискатель</Checkbox>
-    )},
-    { key: 'employee', label: (
+      )
+    },
+    {
+      key: 'employee', label: (
         <Checkbox onChange={(e) => setEmployee(e.target.checked)}>Сотрудник</Checkbox>
-    )}
+      )
+    }
   ]
-
-  const [open, setOpen] = useState(false)
 
   return (
     <Dropdown
       menu={{ items }}
-      trigger={[]}
-      open={open}
     >
-      <FilterContainer onClick={() => setOpen(state => !state) }>
+      <FilterContainer>
         <StyledSettingsFilter
           bordered={false}
           value="Фильтр"
           readOnly={true}
-          prefix={<SlidersOutlined/>}
+          prefix={<SlidersOutlined />}
           suffix={<DownOutlined />}
         />
       </FilterContainer>

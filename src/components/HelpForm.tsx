@@ -63,12 +63,6 @@ export const HelpForm = ({isOpen, setIsOpen} : HelpFormProps) => {
           </Form.Item>
 
           <Form.Item<HelpFormField>
-            name="email"
-          >
-            <Input placeholder='Электронная почта для обратной связи' />
-          </Form.Item>
-
-          <Form.Item<HelpFormField>
             name="message"
             rules={[{ required: true, message: 'Введите сообщение' }]}
           >
