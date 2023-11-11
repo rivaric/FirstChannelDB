@@ -1,4 +1,3 @@
-import { Typography } from 'antd'
 import styled from 'styled-components'
 import { SettingsProps } from '../../../types/props.ts'
 import { SettingsSearch } from './SettingsSearch.tsx'
@@ -26,6 +25,7 @@ const StyledSettings = styled.div`
   .settings-right {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 8px;
   }
 `
@@ -38,11 +38,6 @@ export type SettingsInputsProps = {
 export const Settings = ({ artists, setArtists }: SettingsProps) => {
   return (
     <StyledSettings>
-      <div className="settings-left">
-        <Typography.Title level={2}>
-          Список персон
-        </Typography.Title>
-      </div>
       <div className="settings-right">
         <SettingsSearch artists={artists} setArtists={setArtists}/>
         <SettingsFilter artists={artists} setArtists={setArtists} />

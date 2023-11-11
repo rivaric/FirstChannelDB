@@ -1,31 +1,96 @@
 import styled from 'styled-components'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { logout } from '../../redux/AppSlice.ts'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { StyledButton } from '../common/StyledButton.tsx'
-import { Dropdown, MenuProps } from 'antd'
+import { Dropdown, MenuProps, Typography } from 'antd'
+import { LogoIcon } from './LogoIcon.tsx'
+import { useEffect, useRef, useState } from 'react'
+import { Artist } from '../../types/Artist.ts'
+import { Settings } from '../Main/Settings/Settings.tsx'
 
 const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
-  box-shadow: rgba(31, 41, 55, 0.08) 0 1px 1px;
-  background-color: #fff;
+  width: 100%;
 `
 
 const StyledHeaderContent = styled.div`
-  width: var(--container-width);
+  position: fixed;
+  z-index: 10;
+  width: 100%;
   padding: var(--header-padding);
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #fff;
+  box-shadow: rgba(31, 41, 55, 0.08) 0 1px 1px;
+  
+  .logo {
+    cursor: po;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .logo_text {
+    margin: 0;
+    color: #0757a8;
+  }
+
+  .wrapper_logo_menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
 `
 
 interface HeaderProps {
-  setIsOpenHelpModal: (isOpen : boolean) => void
+  setIsOpenHelpModal: (isOpen: boolean) => void,
+  artistsRedux: Artist[],
+  setArtists: (x: Artist[]) => void,
 }
 
-export const Header = ({setIsOpenHelpModal} : HeaderProps) => {
+export const Header = ({ setIsOpenHelpModal, artistsRedux, setArtists }: HeaderProps) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation();
+  const settingsRef = useRef<HTMLDivElement>(null)
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const wigthChange = 1050
+
+  console.log(location.pathname);
+
+  useEffect(() => {
+    if (location.pathname !== '/' && settingsRef && settingsRef.current) {
+      settingsRef.current.style.display = "none";
+    } else if (settingsRef && settingsRef.current) {
+      settingsRef.current.style.display = "block";
+    }
+  }, [location.pathname])
+
+  useEffect(() => {
+    setArtists(artistsRedux)
+  }, [artistsRedux])
+
+  const onClickLogo = () => {
+    navigate("/")
+  }
+
+  // we use the useEffect hook to listen to the window resize event
+  useEffect(() => {
+    window.onresize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+  }, []);
 
   const onClickExit = () => {
     localStorage.removeItem('access_token')
@@ -66,12 +131,50 @@ export const Header = ({setIsOpenHelpModal} : HeaderProps) => {
 
   return (
     <StyledHeader>
-      <StyledHeaderContent>
-        <Dropdown menu={{ items }} placement='bottom'>
-          <StyledButton type='primary' style={{minWidth: "130px"}}>
-            Меню
-          </StyledButton>
-        </Dropdown>
+      <StyledHeaderContent
+        style={windowSize.width < wigthChange ? { flexDirection: "column", padding: "10px" } : {}}
+      >
+        {
+          windowSize.width < wigthChange ?
+            (
+              <>
+                <div className="wrapper_logo_menu">
+                  <div className="logo" onClick={onClickLogo}>
+                    <LogoIcon />
+                    <Typography.Title level={windowSize.width < 420 ? 4 : 3} className='logo_text'>
+                      База данных
+                    </Typography.Title>
+                  </div>
+                  <Dropdown menu={{ items }} placement='bottom'>
+                    <StyledButton type='primary' style={{ minWidth: "130px" }}>
+                      Меню
+                    </StyledButton>
+                  </Dropdown>
+                </div>
+                <div ref={settingsRef}>
+                  <Settings artists={artistsRedux} setArtists={setArtists} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="logo" onClick={onClickLogo}>
+                  <LogoIcon />
+                  <Typography.Title level={3} className='logo_text'>
+                    База данных
+                  </Typography.Title>
+                </div>
+                <div ref={settingsRef}>
+                  <Settings artists={artistsRedux} setArtists={setArtists} />
+                </div>
+                <Dropdown menu={{ items }} placement='bottom'>
+                  <StyledButton type='primary' style={{ minWidth: "130px" }}>
+                    Меню
+                  </StyledButton>
+                </Dropdown>
+              </>
+            )
+        }
+
       </StyledHeaderContent>
     </StyledHeader>
   )

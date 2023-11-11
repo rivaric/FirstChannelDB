@@ -8,7 +8,7 @@ export type ProfileIconsProps = Pick<
 
 // Main
 export type MainProps = {
-  artistsRedux: Artist[],
+  artists: Artist[],
 }
 
 export type ArtistRowProps = {
@@ -38,7 +38,7 @@ export type ArtistFieldProps = {
 // Settings
 export type SettingsProps = {
   artists: Artist[],
-  setArtists: (artists: Artist[]) => void
+  setArtists: (artists: Artist[]) => void,
 }
 
 // AdminPanel

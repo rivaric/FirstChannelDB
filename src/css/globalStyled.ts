@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
   :root {
-    --c-primary-normal: #2557A2;
+    --c-primary-normal: #0757a8;
     --c-primary-hover: #306ecc;
     
     --container-width: 1260px;

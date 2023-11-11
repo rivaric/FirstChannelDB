@@ -6,10 +6,10 @@ const StyledAvatar = styled.div.withConfig({
   shouldForwardProp: prop => !['photo_url'].includes(prop)
 }) <{ photo_url?: string }>`
   .artist-content-avatar {
-    background-size: cover;
     height: var(--artist-card-avatar-width);
     width: var(--artist-card-avatar-width);
     border-radius: 8px;
+    object-fit: cover;
   }
 `
 

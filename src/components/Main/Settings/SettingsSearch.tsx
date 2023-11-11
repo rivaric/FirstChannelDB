@@ -7,6 +7,11 @@ import { SettingsInputsProps } from './Settings.tsx'
 
 const StyledSettingsSearch = styled(StyledInput)`
   width: 300px;
+  height: 100%;
+
+  @media (max-width: 420px) {
+    width: 200px;
+  }
 `
 
 export const SettingsSearch = ({ artists, setArtists }: SettingsInputsProps) => {
