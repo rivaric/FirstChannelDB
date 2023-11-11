@@ -67,7 +67,6 @@ export const AddEmailForm = () => {
                 <Modal
                     title="Добавить почту (это обязательное действие)"
                     open={isOpenAddEmailModal}
-                    onCancel={() => setIsOpenEmailModal(false)}
                     footer={<></>}>
                     <StyledForm
                         name="help_form"
