@@ -28,7 +28,7 @@ const StyledHeaderContent = styled.div`
   box-shadow: rgba(31, 41, 55, 0.08) 0 1px 1px;
   
   .logo {
-    cursor: po;
+    cursor: pointer;
     display: flex;
     gap: 5px;
     align-items: center;
@@ -106,6 +106,7 @@ export const Header = ({ setIsOpenHelpModal, artistsRedux, setArtists }: HeaderP
 
   const onClickManual = () => {
     console.log("manual");
+    navigate("/manual")
   }
 
   const items: MenuProps['items'] = [

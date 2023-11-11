@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import { allArtists } from './redux/artistThunks.ts'
 import { useAppDispatch, useAppSelector } from './hooks/redux.ts'
 import { Main } from './components/Main/Main.tsx'
+import { Manual } from './components/Manual/Manual.tsx'
 
 const StyledLayout = styled(Layout)`
   background-color: #fff;
@@ -47,6 +48,7 @@ export const App = () => {
             <Route path='/auth' element={<Auth/>}/>
             <Route path='/' element={<Main artists={artists}/>} />
             <Route path='/:artist_id' element={<ArtistCardCheckPublic />} />
+            <Route path='/manual' element={<Manual />} />
           </Routes>
           <HelpForm isOpen={isOpenHelpModal} setIsOpen={setIsOpenHelpModal}/>
         </StyledMainContainer>
