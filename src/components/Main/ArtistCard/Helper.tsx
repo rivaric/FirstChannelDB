@@ -38,7 +38,7 @@ export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint:
   const dispatch = useAppDispatch()
   const handlerPrint = useReactToPrint({
     content: () => contentPrint.current,
-    pageStyle : ``
+    pageStyle: ``
   })
 
   const onLog = () => {
@@ -68,7 +68,14 @@ export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint:
       <Button onClick={() => { savePDF(artist); onLog() }}>
         Сохранить в PDF
       </Button>
-      <Button onClick={handlerPrint}>Распечатать</Button>
+      <Button onClick={() => {
+        const img = document.getElementById("img");
+
+        if (img) {
+          img.style.visibility = "visible";
+        }
+        handlerPrint(); 
+      }}>Распечатать</Button>
       <Dropdown menu={{ items }} placement='bottom'>
         <Button>
           Отправить
