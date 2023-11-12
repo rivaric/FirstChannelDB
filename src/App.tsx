@@ -25,6 +25,7 @@ const StyledMainContainer = styled.main`
 
 export const App = () => {
   const [isOpenHelpModal, setIsOpenHelpModal] = useState(false);
+  const [valueInput, setValueInput] = useState("");
   
   const dispatch = useAppDispatch()
   
@@ -45,12 +46,12 @@ export const App = () => {
     <>
       <GlobalStyles />
       <StyledLayout>
-        <Header setIsOpenHelpModal={setIsOpenHelpModal} />
+        <Header setIsOpenHelpModal={setIsOpenHelpModal} valueInput={valueInput} setValueInput={setValueInput}/>
         <StyledMainContainer>
           <Routes>
             <Route path='/admin_panel' element={<AdminPanelDataLayers/>} />
             <Route path='/auth' element={<Auth/>}/>
-            <Route path='/' element={<Main artists={artistsRedux}/>} />
+            <Route path='/' element={<Main artists={artistsRedux} setValueInput={setValueInput} />} />
             <Route path='/:artist_id' element={<ArtistCardCheckPublic />} />
             <Route path='/manual' element={<Manual />} />
           </Routes>

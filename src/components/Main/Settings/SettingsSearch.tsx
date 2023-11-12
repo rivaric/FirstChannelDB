@@ -17,10 +17,12 @@ const StyledSettingsSearch = styled(StyledInput)`
 
 export const SettingsSearch = ({
   valueInput, 
-  setValueInput
+  setValueInput,
+  setCode,
 } : {
   valueInput: string,
-  setValueInput: (x: string) => void
+  setValueInput: (x: string) => void,
+  setCode: (x: string) => void,
 }) => {
   return (
     <>
@@ -29,9 +31,11 @@ export const SettingsSearch = ({
         allowClear
         value={valueInput}
         onChange={(e) => setValueInput(e.target.value)}
+        onKeyDown={(e) => setCode(e.code)}
         prefix={<SearchOutlined />}
         bordered={false}
         className="settings-right-input"
+        id="serch-input"
       />
     </>
   )

@@ -47,11 +47,15 @@ const StyledHeaderContent = styled.div`
 `;
 
 interface HeaderProps {
-  setIsOpenHelpModal: (isOpen: boolean) => void;
+  setIsOpenHelpModal: (isOpen: boolean) => void,
+  valueInput: string,
+  setValueInput: (x: string) => void,
 }
 
 export const Header = ({
   setIsOpenHelpModal,
+  valueInput,
+  setValueInput,
 }: HeaderProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -153,7 +157,7 @@ export const Header = ({
               </div>
             </div>
             <div ref={settingsRef}>
-              <Settings />
+              <Settings valueInput={valueInput} setValueInput={setValueInput}/>
             </div>
           </>
         ) : (
@@ -165,7 +169,7 @@ export const Header = ({
               </Typography.Title>
             </div>
             <div ref={settingsRef}>
-              <Settings />
+              <Settings valueInput={valueInput} setValueInput={setValueInput}/>
             </div>
             <div ref={menuRef}>
               <Dropdown menu={{ items }} placement="bottom">

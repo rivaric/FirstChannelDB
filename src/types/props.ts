@@ -9,6 +9,7 @@ export type ProfileIconsProps = Pick<
 // Main
 export type MainProps = {
   artists: Artist[],
+  setValueInput: (x: string) => void,
 }
 
 export type ArtistRowProps = {

@@ -50,7 +50,7 @@ export const ArtistCard = ({ artist }: ArtistCardProps) => {
       <ArtistHeader artist={artist} />
       <StyledBreadcrumb items={breadcrumbItems} />
       <div ref={printRef}>
-        <div className='card-container' id={String(artist.id)}>
+        <div className='card-container' id={String(artist.id)} >
           <ArtistCardHeader artist={artist} />
           <ArtistCardBody attitude={artist.attitude} fieldsKeys={fieldsKeys} />
         </div>

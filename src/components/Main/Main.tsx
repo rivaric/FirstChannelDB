@@ -4,9 +4,13 @@ import { ArtistRow } from './ArtistRow.tsx'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Typography } from 'antd'
+import { useAppDispatch } from '../../hooks/redux.ts'
+import { addArtist } from '../../redux/artistThunks.ts'
+import { changeInputFilter, resetCurPage } from '../../redux/AppSlice.ts'
 
-export const Main = ({ artists }: MainProps) => {
+export const Main = ({ artists, setValueInput }: MainProps) => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const isAuth = !!localStorage.getItem('access_token')
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -34,7 +38,12 @@ export const Main = ({ artists }: MainProps) => {
         <Typography.Title level={3} style={{
           marginTop: windowSize.width < 1150 ? "65px" : "12px",
           paddingLeft: "25px",
-        }} id="title">
+          cursor: "pointer"
+        }} id="title" onClick={() => {
+          setValueInput("")
+          dispatch(changeInputFilter(""))
+          dispatch(resetCurPage())
+        }}>
           Список персон
         </Typography.Title>
         {

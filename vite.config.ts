@@ -12,10 +12,10 @@ export default defineConfig({
     host: true,
     strictPort: true,
     port: 5173,
-    // https: {
-    //   key: fs.readFileSync('certs/myPrivate.key'),
-    //   cert: fs.readFileSync('certs/myPublic.pem')
-    // },
+    https: {
+      key: fs.readFileSync('certs/myPrivate.key'),
+      cert: fs.readFileSync('certs/myPublic.pem')
+    },
   },
   plugins: [
     react(),
