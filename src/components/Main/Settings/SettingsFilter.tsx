@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
 import { StyledInput } from './StyledInput.tsx'
 import styled from 'styled-components'
 import { DownOutlined, SlidersOutlined } from '@ant-design/icons'
 import { Checkbox, Dropdown, MenuProps } from 'antd'
-import { SettingsInputsProps } from './Settings.tsx'
+import { useAppDispatch } from '../../../hooks/redux.ts'
+import { changeStatusFilter } from '../../../redux/AppSlice.ts'
 
 const StyledSettingsFilter = styled(StyledInput)`
   width: var(--settings-filter-width);
@@ -31,45 +31,38 @@ const FilterContainer = styled.div`
   }
 `
 
-export const SettingsFilter = ({ artists, setArtists }: SettingsInputsProps) => {
-  const [guest, setGuest] = useState(false)
-  const [candidate, setCandidate] = useState(false)
-  const [employee, setEmployee] = useState(false)
+export const SettingsFilter = () => {
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    const allowedStatus: (string | undefined)[] = []
-    if (!guest && !candidate && !employee) {
-      setArtists(artists)
-    } else {
-      if (guest) {
-        allowedStatus.push('Гость')
-      }
-      if (candidate) {
-        allowedStatus.push('Соискатель')
-      }
-      if (employee) {
-        allowedStatus.push('Сотрудник')
-      }
-      const newArtists = artists.filter(artist => allowedStatus.includes(artist.status))
-      setArtists(newArtists)
-    }
-
-  }, [guest, employee, candidate, setArtists, artists])
+  let statusFilter = {
+    guest: false,
+    candidate: false,
+    employee: false,
+  }
 
   const items: MenuProps['items'] = [
     {
       key: 'guest', label: (
-        <Checkbox onChange={(e) => setGuest(e.target.checked)}>Гость</Checkbox>
+        <Checkbox name="Гость" onChange={(e) => {
+          statusFilter.guest = e.target.checked;
+          dispatch(changeStatusFilter(statusFilter))
+        }}>Гость</Checkbox>
       )
     },
     {
       key: 'candidate', label: (
-        <Checkbox onChange={(e) => setCandidate(e.target.checked)}>Соискатель</Checkbox>
+        <Checkbox name="Соискатель" onChange={(e) => {
+          statusFilter.candidate = e.target.checked;
+          dispatch(changeStatusFilter(statusFilter))
+        }}>Соискатель</Checkbox>
       )
     },
     {
       key: 'employee', label: (
-        <Checkbox onChange={(e) => setEmployee(e.target.checked)}>Сотрудник</Checkbox>
+        <Checkbox name="Сотрудник" onChange={(e) => {
+          statusFilter.employee = e.target.checked;
+          dispatch(changeStatusFilter(statusFilter))
+        }}>Сотрудник</Checkbox>
       )
     }
   ]

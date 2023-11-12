@@ -30,6 +30,17 @@ export type Artist = {
   comment?: string;
 };
 
+export type getAllArtists = {
+  artists: Artist[],
+  max_page: number,
+}
+
+export type Params = {
+  cur_page?: number;
+  status_filter?: string;
+  input_filter?: string;
+}
+
 export type ArtistList = {
   comment?: string,
   files?: any;

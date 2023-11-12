@@ -1,9 +1,8 @@
 import { SearchOutlined } from '@ant-design/icons'
-import { Artist } from '../../../types/Artist.ts'
 import { useState } from 'react'
 import { StyledInput } from './StyledInput.tsx'
 import styled from 'styled-components'
-import { SettingsInputsProps } from './Settings.tsx'
+// import { SettingsInputsProps } from './Settings.tsx'
 
 const StyledSettingsSearch = styled(StyledInput)`
   width: 300px;
@@ -14,20 +13,22 @@ const StyledSettingsSearch = styled(StyledInput)`
   }
 `
 
-export const SettingsSearch = ({ artists, setArtists }: SettingsInputsProps) => {
+export const SettingsSearch = () => {
   const [searchValue, setSearchValue] = useState('')
 
   const onSearch = (value: string) => {
     setSearchValue(value)
 
-    const newArtists: Artist[] = artists.filter((artist: Artist) => {
-      let searchField: keyof Artist
-      for (searchField in artist)
-        if (artist[searchField]?.toString().toLowerCase().includes(value.toLowerCase()))
-          return true
-      return false
-    })
-    setArtists(newArtists)
+
+
+    // const newArtists: Artist[] = artists.filter((artist: Artist) => {
+    //   let searchField: keyof Artist
+    //   for (searchField in artist)
+    //     if (artist[searchField]?.toString().toLowerCase().includes(value.toLowerCase()))
+    //       return true
+    //   return false
+    // })
+    // setArtists(newArtists)
   }
 
   return (

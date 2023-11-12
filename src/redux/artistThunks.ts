@@ -5,9 +5,41 @@ import { getConfig } from "./AppSlice.ts";
 
 export const allArtists = createAsyncThunk(
   "all_artists",
-  async (_, thunkAPI) => {
+  async (
+    {
+      cur_page,
+      status_filter,
+    }: {
+      cur_page?: number;
+      status_filter?: {
+        guest?: boolean;
+        candidate?: boolean;
+        employee?: boolean;
+      };
+    },
+    thunkAPI
+  ) => {
     try {
-      const response = await axios.get<Artist[]>("all_artists", getConfig());
+      let statusFilterStr = ""
+
+      if (status_filter?.guest) {
+        statusFilterStr += "status=Гость&"
+      }
+
+      if (status_filter?.candidate) {
+        statusFilterStr += "status=Соискатель&"
+      }
+
+      if (status_filter?.employee) {
+        statusFilterStr += "status=Сотрудник&"
+      }
+
+      console.log(statusFilterStr);
+      
+      const response = await axios.get<Artist[]>(
+        `all_artists?page=${cur_page}&${statusFilterStr}`,
+        getConfig()
+      );
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Не удалось загрузить персон");

@@ -30,17 +30,17 @@ const StyledSettings = styled.div`
   }
 `
 
-export type SettingsInputsProps = {
-  artists: Artist[]
-  setArtists: (artists: Artist[]) => void
-}
+// export type SettingsInputsProps = {
+//   artists: Artist[]
+//   setArtists: (artists: Artist[]) => void
+// }
 
-export const Settings = ({ artists, setArtists }: SettingsProps) => {
+export const Settings = () => {
   return (
     <StyledSettings>
       <div className="settings-right">
-        <SettingsSearch artists={artists} setArtists={setArtists}/>
-        <SettingsFilter artists={artists} setArtists={setArtists} />
+        <SettingsSearch />
+        <SettingsFilter  />
         <SettingsButton />
       </div>
     </StyledSettings>

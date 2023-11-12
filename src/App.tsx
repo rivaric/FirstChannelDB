@@ -29,24 +29,27 @@ export const App = () => {
   const dispatch = useAppDispatch()
   
   const hasEmail = useAppSelector(state => state.appReducer.auth.has_email);
+  const cur_page = useAppSelector(state => state.appReducer.cur_page);
+  const status_filter = useAppSelector(state => state.appReducer.status_filter);
   
   useEffect(() => {
-    dispatch(allArtists())
-  }, [hasEmail])
+    dispatch(allArtists({
+      cur_page, status_filter
+    }))
+  }, [hasEmail, cur_page, status_filter])
   
   const artistsRedux = useAppSelector(state => state.appReducer.artists)
-  const [artists, setArtists] = useState(artistsRedux);
 
   return (
     <>
       <GlobalStyles />
       <StyledLayout>
-        <Header setIsOpenHelpModal={setIsOpenHelpModal} artistsRedux={artistsRedux} setArtists={setArtists}/>
+        <Header setIsOpenHelpModal={setIsOpenHelpModal} />
         <StyledMainContainer>
           <Routes>
             <Route path='/admin_panel' element={<AdminPanelDataLayers/>} />
             <Route path='/auth' element={<Auth/>}/>
-            <Route path='/' element={<Main artists={artists}/>} />
+            <Route path='/' element={<Main artists={artistsRedux}/>} />
             <Route path='/:artist_id' element={<ArtistCardCheckPublic />} />
             <Route path='/manual' element={<Manual />} />
           </Routes>

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Artist, AuthData, User } from "../types/Artist.ts";
+import { Artist, AuthData, User, getAllArtists } from "../types/Artist.ts";
 import { AuthResponseSuccess } from "../types/auth.ts";
 import { defaultPending, defaultRejected } from "./defaultReducersFuncs.ts";
 import {
@@ -10,10 +10,9 @@ import {
 } from "./artistThunks.ts";
 import { addUser, deleteUser, getUsers } from "./userThunks.ts";
 import { authUser, getAuthData, linkEmail, sendEmail } from "./otherThunks.ts";
-import { useAppDispatch } from "../hooks/redux.ts";
 
 export const getConfig = () => ({
-  baseURL: "http://37.46.129.49:8080/",
+  baseURL: "https://пкбд.рф:8080/",
   headers: {
     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
   },
@@ -32,6 +31,14 @@ export type AppSliceState = {
     isAdmin: boolean;
     has_email: boolean;
   };
+  max_page: number;
+  cur_page: number;
+  status_filter: {
+    guest: boolean,
+    candidate: boolean,
+    employee: boolean,
+  };
+  input_filter: string;
 };
 
 const initialState: AppSliceState = {
@@ -47,6 +54,14 @@ const initialState: AppSliceState = {
     isAdmin: true,
     has_email: true,
   },
+  max_page: 0,
+  cur_page: 1,
+  status_filter: {
+    guest: false,
+    candidate: false,
+    employee: false,
+  },
+  input_filter: "",
 };
 
 export const AppSlice = createSlice({
@@ -61,13 +76,20 @@ export const AppSlice = createSlice({
     logout: (state) => {
       state.auth.isAuth = false;
     },
-    
+    changeCurPage: (state, action) => {
+      state.cur_page = action.payload;
+    },
+    changeStatusFilter: (state, action) => {
+      state.status_filter = action.payload;
+    }
   },
   extraReducers: {
     // artists
-    [allArtists.fulfilled.type]: (state, action: PayloadAction<Artist[]>) => {
+    [allArtists.fulfilled.type]: (state, action: PayloadAction<getAllArtists>) => {
+      const payload = action.payload;
       state.isLoading = false;
-      state.artists = action.payload;
+      state.artists = payload.artists;
+      state.max_page = payload.max_page;
     },
     [getArtist.fulfilled.type]: (state, action: PayloadAction<Artist>) => {
       state.isLoading = false;
@@ -148,6 +170,6 @@ export const AppSlice = createSlice({
   },
 });
 
-export const { checkAuth, logout } = AppSlice.actions;
+export const { checkAuth, logout, changeCurPage, changeStatusFilter } = AppSlice.actions;
 
 export default AppSlice.reducer;

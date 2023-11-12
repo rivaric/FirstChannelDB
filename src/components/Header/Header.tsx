@@ -6,7 +6,6 @@ import { StyledButton } from "../common/StyledButton.tsx";
 import { Dropdown, MenuProps, Typography } from "antd";
 import { LogoIcon } from "./LogoIcon.tsx";
 import { useEffect, useRef, useState } from "react";
-import { Artist } from "../../types/Artist.ts";
 import { Settings } from "../Main/Settings/Settings.tsx";
 
 const StyledHeader = styled.header`
@@ -49,14 +48,14 @@ const StyledHeaderContent = styled.div`
 
 interface HeaderProps {
   setIsOpenHelpModal: (isOpen: boolean) => void;
-  artistsRedux: Artist[];
-  setArtists: (x: Artist[]) => void;
+  // artistsRedux: Artist[];
+  // setArtists: (x: Artist[]) => void;
 }
 
 export const Header = ({
   setIsOpenHelpModal,
-  artistsRedux,
-  setArtists,
+  // artistsRedux,
+  // setArtists,
 }: HeaderProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -83,9 +82,9 @@ export const Header = ({
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    setArtists(artistsRedux);
-  }, [artistsRedux]);
+  // useEffect(() => {
+  //   setArtists(artistsRedux);
+  // }, [artistsRedux]);
 
   const onClickLogo = () => {
     navigate("/");
@@ -162,7 +161,7 @@ export const Header = ({
               </div>
             </div>
             <div ref={settingsRef}>
-              <Settings artists={artistsRedux} setArtists={setArtists} />
+              <Settings />
             </div>
           </>
         ) : (
@@ -174,7 +173,7 @@ export const Header = ({
               </Typography.Title>
             </div>
             <div ref={settingsRef}>
-              <Settings artists={artistsRedux} setArtists={setArtists} />
+              <Settings />
             </div>
             <div ref={menuRef}>
               <Dropdown menu={{ items }} placement="bottom">

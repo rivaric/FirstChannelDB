@@ -9,7 +9,7 @@ export const authUser = createAsyncThunk(
   async (values: AuthFieldType, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://37.46.129.49:8080/auth_user",
+        "https://пкбд.рф:8080/auth_user",
         values
       );
       return response.data;
