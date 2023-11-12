@@ -1,45 +1,38 @@
 import { SearchOutlined } from '@ant-design/icons'
-import { useState } from 'react'
 import { StyledInput } from './StyledInput.tsx'
 import styled from 'styled-components'
-// import { SettingsInputsProps } from './Settings.tsx'
 
 const StyledSettingsSearch = styled(StyledInput)`
   width: 300px;
   height: 100%;
 
-  @media (max-width: 420px) {
+  @media (max-width: 500px) {
+    width: 130px;
+  }
+
+  @media (min-width: 501px) and (max-width: 700px) {
     width: 200px;
   }
 `
 
-export const SettingsSearch = () => {
-  const [searchValue, setSearchValue] = useState('')
-
-  const onSearch = (value: string) => {
-    setSearchValue(value)
-
-
-
-    // const newArtists: Artist[] = artists.filter((artist: Artist) => {
-    //   let searchField: keyof Artist
-    //   for (searchField in artist)
-    //     if (artist[searchField]?.toString().toLowerCase().includes(value.toLowerCase()))
-    //       return true
-    //   return false
-    // })
-    // setArtists(newArtists)
-  }
-
+export const SettingsSearch = ({
+  valueInput, 
+  setValueInput
+} : {
+  valueInput: string,
+  setValueInput: (x: string) => void
+}) => {
   return (
+    <>
       <StyledSettingsSearch
         placeholder="Поиск"
         allowClear
-        value={searchValue}
-        onChange={(e) => onSearch(e.target.value)}
+        value={valueInput}
+        onChange={(e) => setValueInput(e.target.value)}
         prefix={<SearchOutlined />}
         bordered={false}
         className="settings-right-input"
       />
+    </>
   )
 }

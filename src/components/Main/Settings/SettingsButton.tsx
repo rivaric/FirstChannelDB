@@ -43,7 +43,6 @@ export const SettingsButton = () => {
     <Dropdown menu={{ items }} placement='bottom'>
       <StyledSettingsButton
         type="primary"
-
         icon={<PlusOutlined />}
       >
         Новый запрос

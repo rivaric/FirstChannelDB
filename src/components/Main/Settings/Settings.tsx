@@ -1,9 +1,11 @@
 import styled from 'styled-components'
-import { SettingsProps } from '../../../types/props.ts'
 import { SettingsSearch } from './SettingsSearch.tsx'
 import { SettingsButton } from './SettingsButton.tsx'
 import { SettingsFilter } from './SettingsFilter.tsx'
-import { Artist } from '../../../types/Artist.ts'
+import { StyledButton } from '../../common/StyledButton.tsx'
+import { useState } from 'react'
+import { useAppDispatch } from '../../../hooks/redux.ts'
+import { changeInputFilter, changeStatusFilter, resetCurPage } from '../../../redux/AppSlice.ts'
 
 const StyledSettings = styled.div`
   display: flex;
@@ -30,17 +32,30 @@ const StyledSettings = styled.div`
   }
 `
 
-// export type SettingsInputsProps = {
-//   artists: Artist[]
-//   setArtists: (artists: Artist[]) => void
-// }
-
 export const Settings = () => {
+  const [valueInput, setValueInput] = useState("");
+  const [valueFilter, setValueFilter] = useState({
+    guest: false,
+    candidate: false,
+    employee: false,
+  });
+  const dispatch = useAppDispatch();
+
+  const onClickSerch = () => {
+    dispatch(changeInputFilter(valueInput));
+    dispatch(changeStatusFilter(valueFilter));
+    dispatch(resetCurPage());
+    window.scroll({top:0,behavior:'smooth'});
+  }
+
   return (
     <StyledSettings>
       <div className="settings-right">
-        <SettingsSearch />
-        <SettingsFilter  />
+        <SettingsSearch valueInput={valueInput} setValueInput={setValueInput}/>
+        <SettingsFilter valueFilter={valueFilter} setValueFilter={setValueFilter}/>
+        <StyledButton onClick={onClickSerch}>
+          Поиск
+        </StyledButton>
         <SettingsButton />
       </div>
     </StyledSettings>

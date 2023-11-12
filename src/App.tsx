@@ -31,12 +31,13 @@ export const App = () => {
   const hasEmail = useAppSelector(state => state.appReducer.auth.has_email);
   const cur_page = useAppSelector(state => state.appReducer.cur_page);
   const status_filter = useAppSelector(state => state.appReducer.status_filter);
+  const input_filter = useAppSelector(state => state.appReducer.input_filter);
   
   useEffect(() => {
     dispatch(allArtists({
-      cur_page, status_filter
+      cur_page, status_filter, input_filter
     }))
-  }, [hasEmail, cur_page, status_filter])
+  }, [hasEmail, cur_page, status_filter, input_filter])
   
   const artistsRedux = useAppSelector(state => state.appReducer.artists)
 

@@ -48,14 +48,10 @@ const StyledHeaderContent = styled.div`
 
 interface HeaderProps {
   setIsOpenHelpModal: (isOpen: boolean) => void;
-  // artistsRedux: Artist[];
-  // setArtists: (x: Artist[]) => void;
 }
 
 export const Header = ({
   setIsOpenHelpModal,
-  // artistsRedux,
-  // setArtists,
 }: HeaderProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -66,7 +62,7 @@ export const Header = ({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const wigthChange = 1050;
+  const wigthChange = 1150;
 
   useEffect(() => {
     if (location.pathname !== "/" && settingsRef && settingsRef.current) {
@@ -81,10 +77,6 @@ export const Header = ({
       menuRef.current.style.display = "block"
     }
   }, [location.pathname]);
-
-  // useEffect(() => {
-  //   setArtists(artistsRedux);
-  // }, [artistsRedux]);
 
   const onClickLogo = () => {
     navigate("/");

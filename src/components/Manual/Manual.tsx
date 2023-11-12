@@ -147,7 +147,7 @@ export const Manual = () => {
                                 Шаг 1
                             </Typography.Title>
                             <div className="step_descr">
-                                Нажмите в нижнем меню браузера центральную иконку «Поделиться»
+                                В верхнем меню браузера справа нажмите «Три точки»
                             </div>
                         </div>
                         <img src={step1AND} alt="" className="step_img" />
@@ -158,7 +158,7 @@ export const Manual = () => {
                                 Шаг 2
                             </Typography.Title>
                             <div className="step_descr">
-                                Выберите На экран «Домой»
+                                Выберите «Добавить на гл. экран»
                             </div>
                         </div>
                         <img src={step2AND} alt="" className="step_img" />

@@ -9,6 +9,7 @@ export const allArtists = createAsyncThunk(
     {
       cur_page,
       status_filter,
+      input_filter,
     }: {
       cur_page?: number;
       status_filter?: {
@@ -16,11 +17,13 @@ export const allArtists = createAsyncThunk(
         candidate?: boolean;
         employee?: boolean;
       };
+      input_filter?: string;
     },
     thunkAPI
   ) => {
     try {
       let statusFilterStr = ""
+      let inputFilterStr = input_filter !== "" ? `full_name=${input_filter}` : ""
 
       if (status_filter?.guest) {
         statusFilterStr += "status=Гость&"
@@ -33,11 +36,9 @@ export const allArtists = createAsyncThunk(
       if (status_filter?.employee) {
         statusFilterStr += "status=Сотрудник&"
       }
-
-      console.log(statusFilterStr);
       
       const response = await axios.get<Artist[]>(
-        `all_artists?page=${cur_page}&${statusFilterStr}`,
+        `all_artists?page=${cur_page}&${statusFilterStr}&${inputFilterStr}`,
         getConfig()
       );
       return response.data;

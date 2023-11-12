@@ -9,6 +9,7 @@ export const StyledButton = styled(Button)`
     justify-content: center;
     align-items: center;
     min-width: 32px;
+    color: #fff;
     
     &:hover {
       background: var(--c-primary-hover);

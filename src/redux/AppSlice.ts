@@ -81,6 +81,12 @@ export const AppSlice = createSlice({
     },
     changeStatusFilter: (state, action) => {
       state.status_filter = action.payload;
+    },
+    changeInputFilter: (state, action) => {
+      state.input_filter = action.payload
+    },
+    resetCurPage: (state) => {
+      state.cur_page = 1;
     }
   },
   extraReducers: {
@@ -170,6 +176,6 @@ export const AppSlice = createSlice({
   },
 });
 
-export const { checkAuth, logout, changeCurPage, changeStatusFilter } = AppSlice.actions;
+export const { checkAuth, logout, changeCurPage, changeStatusFilter, changeInputFilter, resetCurPage } = AppSlice.actions;
 
 export default AppSlice.reducer;

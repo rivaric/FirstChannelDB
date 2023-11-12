@@ -46,7 +46,7 @@ export const AddEmailForm = () => {
             "Почта будет добавлена к вашему аккаунту в ближайшее время"
         );
 
-    const onFinish = (email: HelpFormField) => {
+    const onFinish = (email: AddEmailFormField) => {
         dispatch(linkEmail(email));
         dispatch(getAuthData());
         setIsOpenEmailModal(!hasEmail);

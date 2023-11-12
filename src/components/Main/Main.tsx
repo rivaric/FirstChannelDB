@@ -31,10 +31,10 @@ export const Main = ({ artists }: MainProps) => {
   return (
     <main>
       <div className='main-list-container' >
-        <Pagination />
         <Typography.Title level={3} style={{
-          marginTop: windowSize.width < 1050 ? "65px" : "12px",
-        }}>
+          marginTop: windowSize.width < 1150 ? "65px" : "12px",
+          paddingLeft: "25px",
+        }} id="title">
           Список персон
         </Typography.Title>
         {
@@ -42,6 +42,7 @@ export const Main = ({ artists }: MainProps) => {
             <ArtistRow artist={artist} key={artist.id} />
           ))
         }
+        <Pagination />
       </div>
     </main>
   )
