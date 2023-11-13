@@ -6,20 +6,18 @@ import { ArtistFieldProps } from '../../../types/props.ts'
 const StyledArtistField = styled.div`
   display: flex;
   margin-bottom: 10px;
+  width: max-content;
 
   &:not(:last-child) {
     box-shadow: var(--artist-field-box-shadow);
   }
   
-  .field-key {
-    // padding: var(--artist-field-key-padding);
-  }
-  
   .field-value {
     overflow: hidden;
     padding-left: 5px;
+    max-width: 200px;
     // padding: var(--artist-field-value-padding);
-    text-align: var(--artist-field-text-align);
+    text-align: left;
   }
 `
 

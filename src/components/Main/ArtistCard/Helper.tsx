@@ -1,13 +1,15 @@
 import styled from 'styled-components'
 import { Button, Dropdown, MenuProps } from 'antd'
 import { savePDF } from '../../../helpers/savePDF.ts'
-import YandexShare from '../../ReactYandexShare.tsx'
+
 import { Artist } from '../../../types/Artist.ts'
-import { useAppDispatch } from '../../../hooks/redux.ts'
-import { logDownload } from '../../../redux/otherThunks.ts'
-import { makePublic } from '../../../redux/artistThunks.ts'
-import ReactToPrint, { useReactToPrint } from 'react-to-print'
+import { useReactToPrint } from 'react-to-print'
 import { RefObject } from 'react'
+
+import facebook from './icon/free-icon-facebook-174848.png';
+import vk from './icon/free-icon-vkontakte-3536582.png';
+import tg from './icon/free-icon-telegram-3536661.png';
+import vider from './icon/free-icon-viber-3938039.png';
 
 const StyledHelper = styled.div`
   display: flex;
@@ -17,55 +19,58 @@ const StyledHelper = styled.div`
   margin-top: 16px;
   padding: 8px 0;
   flex-wrap: wrap;
-  
-  &&&& .ya-share2__list {
-    display: flex;
-    gap: 12px;
-    
-    .ya-share2__item {
-      margin: 0;
-      
-      .ya-share2__badge, .ya-share2__icon {
-        width: 32px;
-        height: 32px;
-        background-size: cover;
-      }
-    }
-  }
 `
 
 export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint: RefObject<HTMLDivElement> }) => {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
   const handlerPrint = useReactToPrint({
     content: () => contentPrint.current,
     pageStyle: ``
   })
+  const url = window.location.href;
 
-  const onLog = () => {
-    dispatch(logDownload(artist.id))
-    dispatch(makePublic(artist.id))
-  }
 
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <span onMouseUp={() => onLog()} onTouchEnd={() => onLog()}>
-          <YandexShare theme={{
-            services: 'vkontakte,telegram,whatsapp,viber'
-          }}
-            content={{
-              url: window.location.href
-            }}
+        <div className='dropdown-wrapper'>
+          <img
+            src={tg}
+            alt=""
+            className='icon'
+            style={{ width: "30px" }}
+            onClick={() => window.open(`https://telegram.me/share/url?url=${url}`,"sharer","status=0,toolbar=0,width=650,height=500")}
           />
-        </span>
+          <img
+            src={facebook}
+            alt=""
+            className='icon'
+            onClick={() => window.open(`https://www.facebook.com/sharer.php?u=${url}`, "sharer", "status=0,toolbar=0,width=650,height=500")}
+            style={{ width: "30px", marginLeft: "5px" }} 
+          />
+          <img
+            src={vk}
+            alt=""
+            className='icon'
+            onClick={() => window.open(`https://vk.com/share.php?url=${url}`,"sharer","status=0,toolbar=0,width=650,height=500")}
+            style={{ width: "30px", marginLeft: "5px" }} 
+          />
+          <img
+            src={vider}
+            alt=""
+            className='icon'
+            onClick={() => window.open(`viber://forward?text=${url}`,"sharer","status=0,toolbar=0,width=650,height=500")}
+            style={{ width: "30px", marginLeft: "5px" }} 
+          />
+        </div>
       ),
     },
   ];
 
   return (
     <StyledHelper>
-      <Button onClick={() => { savePDF(artist); onLog() }}>
+      <Button onClick={() => { savePDF(artist) }}>
         Сохранить в PDF
       </Button>
       <Button onClick={() => {
@@ -74,7 +79,8 @@ export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint:
         if (img) {
           img.style.visibility = "visible";
         }
-        handlerPrint(); 
+
+        handlerPrint();
       }}>Распечатать</Button>
       <Dropdown menu={{ items }} placement='bottom'>
         <Button>

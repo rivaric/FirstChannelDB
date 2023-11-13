@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Typography } from 'antd'
 import { useAppDispatch } from '../../hooks/redux.ts'
-import { addArtist } from '../../redux/artistThunks.ts'
 import { changeInputFilter, resetCurPage } from '../../redux/AppSlice.ts'
 
 export const Main = ({ artists, setValueInput }: MainProps) => {

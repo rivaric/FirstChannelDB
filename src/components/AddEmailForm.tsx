@@ -1,6 +1,6 @@
 import { Form, Input, Modal } from "antd";
 import styled from "styled-components";
-import { AddEmailFormField, HelpFormField } from "../types/Artist.ts";
+import { AddEmailFormField } from "../types/Artist.ts";
 import { useAppDispatch, useAppSelector } from "../hooks/redux.ts";
 import { getAuthData, linkEmail } from "../redux/otherThunks.ts";
 import { useLocation } from "react-router-dom";

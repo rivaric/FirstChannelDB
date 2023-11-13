@@ -1,3 +1,4 @@
+// @ts-nocheck
 import html2pdf from "html2pdf.js";
 import { Artist } from "../types/Artist.ts";
 

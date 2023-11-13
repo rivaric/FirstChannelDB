@@ -24,7 +24,7 @@ export const ProfileIcon = ({ photo_url, full_name }: ProfileIconsProps) => {
 
   return (
     <StyledProfileIcon>
-      { photo_url ? <img src={photo_url}/> : <span>{ full_name.slice(0, 1).toUpperCase() }</span> }
+      { photo_url ? <img src={photo_url}/> : <span>{ full_name ? full_name.slice(0, 1).toUpperCase() : null }</span> }
     </StyledProfileIcon>
   )
 }

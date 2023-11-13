@@ -12,7 +12,6 @@ const StyledCardBody = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
     padding-top: 16px;
-    width: 100%;
   }
 `
 

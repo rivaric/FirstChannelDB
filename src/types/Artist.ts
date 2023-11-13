@@ -1,5 +1,5 @@
 export type Artist = {
-  id: number; // -
+  id?: number; // -
   attitude?: string; // -
   created_at?: string; // -
   photo_url?: string; // -
@@ -8,7 +8,7 @@ export type Artist = {
   first_name?: string;
   last_name?: string;
 
-  full_name: string; // -
+  full_name?: string; // -
   activity?: string; // -
   psy_character?: string | null; // +
   status?: "Гость" | "Соискатель" | "Сотрудник"; // +

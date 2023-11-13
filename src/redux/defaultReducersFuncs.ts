@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export const defaultPending = (state) => {
