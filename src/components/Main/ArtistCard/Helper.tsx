@@ -6,7 +6,7 @@ import { Artist } from '../../../types/Artist.ts'
 import { useReactToPrint } from 'react-to-print'
 import { RefObject } from 'react'
 
-import facebook from './icon/free-icon-facebook-174848.png';
+import whatsapp from './icon/whatsapp-svgrepo-com.png';
 import vk from './icon/free-icon-vkontakte-3536582.png';
 import tg from './icon/free-icon-telegram-3536661.png';
 import vider from './icon/free-icon-viber-3938039.png';
@@ -22,12 +22,11 @@ const StyledHelper = styled.div`
 `
 
 export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint: RefObject<HTMLDivElement> }) => {
-  // const dispatch = useAppDispatch()
   const handlerPrint = useReactToPrint({
     content: () => contentPrint.current,
     pageStyle: ``
   })
-  const url = window.location.href;
+  const url = `https://пкбд.рф${window.location.pathname}`;
 
 
   const items: MenuProps['items'] = [
@@ -43,10 +42,10 @@ export const Helper = ({ artist, contentPrint }: { artist: Artist, contentPrint:
             onClick={() => window.open(`https://telegram.me/share/url?url=${url}`,"sharer","status=0,toolbar=0,width=650,height=500")}
           />
           <img
-            src={facebook}
+            src={whatsapp}
             alt=""
             className='icon'
-            onClick={() => window.open(`https://www.facebook.com/sharer.php?u=${url}`, "sharer", "status=0,toolbar=0,width=650,height=500")}
+            onClick={() => window.open(`https://api.whatsapp.com/send?text=${url}`, "sharer", "status=0,toolbar=0,width=650,height=500")}
             style={{ width: "30px", marginLeft: "5px" }} 
           />
           <img

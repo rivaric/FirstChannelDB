@@ -1,7 +1,2 @@
-FROM node:18.18.1-alpine
-WORKDIR /frontend
-EXPOSE 3000
-COPY ./package.json .
-RUN npm install
-COPY . .
-CMD ["npm", "run", "dev"]
+FROM nginx
+COPY dist /var/www/xn--90agqt.xn--p1ai

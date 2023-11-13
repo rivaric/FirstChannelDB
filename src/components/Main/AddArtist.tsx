@@ -1,7 +1,7 @@
 import { Drawer, Form, Input, Select } from 'antd'
-import { useAppDispatch } from '../../hooks/redux.ts'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts'
 import { Artist } from '../../types/Artist.ts'
-import { addArtist } from '../../redux/artistThunks.ts'
+import { addArtist, allArtists } from '../../redux/artistThunks.ts'
 import { AddArtistProps } from '../../types/props.ts'
 import { StyledButton } from '../common/StyledButton.tsx'
 import { useNotification } from '../common/useNotification.tsx'
@@ -18,8 +18,15 @@ export const AddArtist = ({ open, setOpen }: AddArtistProps) => {
     'Карточка будет актуализирована в ближайшее время'
   )
 
+  const cur_page = useAppSelector(state => state.appReducer.cur_page);
+  const status_filter = useAppSelector(state => state.appReducer.status_filter);
+  const input_filter = useAppSelector(state => state.appReducer.input_filter);
+
   const onFinish = (artist: Artist) => {
     dispatch(addArtist(artist))
+    dispatch(allArtists({
+      cur_page, status_filter, input_filter
+    }))
     setOpen(false)
     openNotification()
   }

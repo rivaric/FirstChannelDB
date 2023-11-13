@@ -101,9 +101,8 @@ export const AppSlice = createSlice({
       state.isLoading = false;
       state.currentArtist = action.payload;
     },
-    [addArtist.fulfilled.type]: (state, action: PayloadAction<Artist[]>) => {
+    [addArtist.fulfilled.type]: (state) => {
       state.isLoading = false;
-      state.artists = action.payload;
     },
     [checkPublic.fulfilled.type]: (state, action: PayloadAction<boolean>) => {
       state.isLoading = false;

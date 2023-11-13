@@ -104,12 +104,10 @@ export const Header = ({
   };
 
   const onClickHelp = () => {
-    console.log("help");
     setIsOpenHelpModal(true);
   };
 
   const onClickManual = () => {
-    console.log("manual");
     navigate("/manual");
   };
 
