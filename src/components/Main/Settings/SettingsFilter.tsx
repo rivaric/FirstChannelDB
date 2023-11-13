@@ -3,7 +3,7 @@ import { StyledInput } from "./StyledInput.tsx";
 import styled from "styled-components";
 import { DownOutlined, SlidersOutlined } from "@ant-design/icons";
 import { Checkbox, Dropdown, MenuProps } from "antd";
-import { useAppDispatch } from "../../../hooks/redux.ts";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux.ts";
 import { changeStatusFilter } from "../../../redux/AppSlice.ts";
 import { useEffect, useState } from "react";
 
@@ -52,14 +52,29 @@ export const SettingsFilter = ({
   const [isGuest, setIsGuest] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
   const [isEmployee, setIsEmployeet] = useState(false);
+  const status_filter = useAppSelector(
+    (state) => state.appReducer.status_filter
+  );
+
+  useEffect(() => {
+    if (
+      !status_filter.candidate &&
+      !status_filter.employee &&
+      !status_filter.guest
+    ) {
+      setIsGuest(false);
+      setIsCandidate(false);
+      setIsEmployeet(false);
+    }
+  }, [status_filter]);
 
   useEffect(() => {
     setValueFilter({
       guest: isGuest,
       candidate: isCandidate,
       employee: isEmployee,
-    })
-  }, [isGuest, isCandidate, isEmployee])
+    });
+  }, [isGuest, isCandidate, isEmployee]);
 
   const items: MenuProps["items"] = [
     {
@@ -67,6 +82,7 @@ export const SettingsFilter = ({
       label: (
         <Checkbox
           name="Гость"
+          checked={isGuest}
           onChange={(e) => {
             setIsGuest(e.target.checked);
           }}>
@@ -79,6 +95,7 @@ export const SettingsFilter = ({
       label: (
         <Checkbox
           name="Соискатель"
+          checked={isCandidate}
           onChange={(e) => {
             setIsCandidate(e.target.checked);
           }}>
@@ -91,6 +108,7 @@ export const SettingsFilter = ({
       label: (
         <Checkbox
           name="Сотрудник"
+          checked={isEmployee}
           onChange={(e) => {
             setIsEmployeet(e.target.checked);
           }}>

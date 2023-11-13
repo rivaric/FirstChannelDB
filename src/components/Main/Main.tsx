@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Typography } from 'antd'
 import { useAppDispatch } from '../../hooks/redux.ts'
-import { changeInputFilter, resetCurPage } from '../../redux/AppSlice.ts'
+import { changeInputFilter, changeStatusFilter, resetCurPage } from '../../redux/AppSlice.ts'
 
 export const Main = ({ artists, setValueInput }: MainProps) => {
   const navigate = useNavigate()
@@ -42,6 +42,11 @@ export const Main = ({ artists, setValueInput }: MainProps) => {
           setValueInput("")
           dispatch(changeInputFilter(""))
           dispatch(resetCurPage())
+          dispatch(changeStatusFilter({
+            guest: false,
+            candidate: false,
+            employee: false,
+          }))
         }}>
           Список персон
         </Typography.Title>
