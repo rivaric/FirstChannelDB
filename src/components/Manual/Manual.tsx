@@ -2,11 +2,11 @@ import { Typography } from "antd"
 import styled from "styled-components"
 import { P } from "../common/P"
 import step1IOS from "../Manual/Steps/IOS/1.png"
-import step2IOS from "../Manual/Steps/IOS/4.png"
+import step2IOS from "../Manual/Steps/IOS/2.png"
 import step3IOS from "../Manual/Steps/IOS/3.png"
 
 import step1AND from "../Manual/Steps/Android/1.png"
-import step2AND from "../Manual/Steps/Android/4.png"
+import step2AND from "../Manual/Steps/Android/2.png"
 import step3AND from "../Manual/Steps/Android/3.png"
 
 
